@@ -83,7 +83,7 @@ end
 
 ---@param ptr ffi.cdata*
 ---@return number # Length of instruction in bytes
----@return { name: string }?
+---@return { name: string, ascii: string? }?
 local function decodeInstruction(ptr)
 	local i, is64 = skipPrefixes(ptr, 0)
 
@@ -112,6 +112,7 @@ local function decodeInstruction(ptr)
 		imm = 8
 	end
 
+	local imm_start = i
 	i = i + imm
 
 	local name = enc.name
@@ -120,7 +121,28 @@ local function decodeInstruction(ptr)
 		name = enc.group[modrm.reg + 1] or enc.name
 	end
 
-	return i, { name = name }
+	local ascii
+	if imm > 0 then
+		local printable = true
+		for j = 0, imm - 1 do
+			local b = ptr[imm_start + j]
+			if b < 0x20 or b > 0x7E then
+				printable = false
+				break
+			end
+		end
+
+		if printable then
+			local chars = {}
+			for j = 0, imm - 1 do
+				chars[j + 1] = string.char(ptr[imm_start + j])
+			end
+
+			ascii = table.concat(chars)
+		end
+	end
+
+	return i, { name = name, ascii = ascii }
 end
 
 ---@param content string
@@ -137,12 +159,22 @@ function x86.disassemble(content)
 		end
 
 		if op then
-			ansi.printf(
-				"{blue}%08X{reset}: {yellow}%s{gray} -- %s",
-				i,
-				table.concat(hex, " "),
-				op.name
-			)
+			if op.ascii then
+				ansi.printf(
+					"{blue}%08X{reset}: {yellow}%s{gray} -- %s {green}\"%s\"",
+					i,
+					table.concat(hex, " "),
+					op.name,
+					op.ascii
+				)
+			else
+				ansi.printf(
+					"{blue}%08X{reset}: {yellow}%s{gray} -- %s",
+					i,
+					table.concat(hex, " "),
+					op.name
+				)
+			end
 		else
 			ansi.printf(
 				"{blue}%08X{reset}: {yellow}%s{gray}",
