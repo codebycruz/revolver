@@ -20,7 +20,7 @@ typedef struct {
 } Elf64_Shdr;
 ]]
 
----@class revolver.ffi.Elf64_Ehdr: ffi.cdata*
+---@class rv.ffi.Elf64_Ehdr: ffi.cdata*
 ---@field e_ident number[]
 ---@field e_type number
 ---@field e_machine number
@@ -36,7 +36,7 @@ typedef struct {
 ---@field e_shnum number
 ---@field e_shstrndx number
 
----@class revolver.ffi.Elf64_Shdr: ffi.cdata*
+---@class rv.ffi.Elf64_Shdr: ffi.cdata*
 ---@field sh_name number
 ---@field sh_type number
 ---@field sh_flags number
@@ -55,17 +55,17 @@ local elf = {}
 function elf.text(content)
 	local bytes = ffi.cast("const uint8_t*", content)
 
-	---@type revolver.ffi.Elf64_Ehdr
+	---@type rv.ffi.Elf64_Ehdr
 	local header = ffi.cast("Elf64_Ehdr*", bytes)
 
-	---@type revolver.ffi.Elf64_Shdr
+	---@type rv.ffi.Elf64_Shdr
 	local shstrtab_hdr = ffi.cast("Elf64_Shdr*", bytes + header.e_shoff
 		+ header.e_shstrndx * header.e_shentsize)
 
 	local shstrtab = bytes + shstrtab_hdr.sh_offset
 
 	for i = 0, header.e_shnum - 1 do
-		---@type revolver.ffi.Elf64_Shdr
+		---@type rv.ffi.Elf64_Shdr
 		local shdr = ffi.cast("Elf64_Shdr*", bytes + header.e_shoff
 			+ i * header.e_shentsize)
 

@@ -3,7 +3,7 @@ local ansi = require("ansi")
 
 local x86 = {}
 
-local ops = require("revolver.x86.ops")
+local ops = require("rv.x86.ops")
 local op1 = ops.op1
 local op2 = ops.op2
 

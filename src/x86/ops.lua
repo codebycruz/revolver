@@ -1,13 +1,13 @@
 --- This file is MOSTLY generated.
 
----@alias revolver.x86.Op { name: string, modrm: boolean, imm: integer, group: string[] }
+---@alias rv.x86.Op { name: string, modrm: boolean, imm: integer, group: string[] }
 
 --- 1 byte opcodes
----@type revolver.x86.Op[]
+---@type rv.x86.Op[]
 local op1 = {}
 
 --- 2 byte opcodes
----@type revolver.x86.Op[]
+---@type rv.x86.Op[]
 local op2 = {}
 
 -- one byte opcodes

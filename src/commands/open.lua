@@ -1,8 +1,8 @@
 local ffi = require("ffi")
 
 local ansi = require("ansi")
-local elf = require("revolver.elf")
-local x86 = require("revolver.x86")
+local elf = require("rv.elf")
+local x86 = require("rv.x86")
 
 ---@param args clap.Args
 local function open(args)
