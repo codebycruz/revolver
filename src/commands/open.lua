@@ -23,7 +23,7 @@ local function open(args)
 	handle:close()
 
 	local out = elf.text(content)
-	local disasm = x86.disassemble(out)
+	x86.disassemble(out)
 end
 
 return open

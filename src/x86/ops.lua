@@ -1,6 +1,6 @@
 --- This file is MOSTLY generated.
 
----@alias rv.x86.Op { name: string, modrm: boolean, imm: integer, group: string[] }
+---@alias rv.x86.Op { name: string, modrm: boolean, imm: integer, grp: string[], is64?: boolean }
 
 --- 1 byte opcodes
 ---@type rv.x86.Op[]
@@ -59,14 +59,14 @@ op1[0x3A] = { name = "cmp r r/m8", modrm = true, imm = 0 }
 op1[0x3B] = { name = "cmp r r/m", modrm = true, imm = 0 }
 op1[0x3C] = { name = "cmp al imm8", modrm = false, imm = 1 }
 op1[0x3D] = { name = "cmp ax imm", modrm = false, imm = 4 }
-op1[0x50] = { name = "push rax", modrm = false, imm = 0 }
-op1[0x51] = { name = "push rcx", modrm = false, imm = 0 }
-op1[0x52] = { name = "push rdx", modrm = false, imm = 0 }
-op1[0x53] = { name = "push rbx", modrm = false, imm = 0 }
-op1[0x54] = { name = "push rsp", modrm = false, imm = 0 }
-op1[0x55] = { name = "push rbp", modrm = false, imm = 0 }
-op1[0x56] = { name = "push rsi", modrm = false, imm = 0 }
-op1[0x57] = { name = "push rdi", modrm = false, imm = 0 }
+op1[0x50] = { name = "push rax", modrm = false, imm = 0, is64 = true }
+op1[0x51] = { name = "push rcx", modrm = false, imm = 0, is64 = true }
+op1[0x52] = { name = "push rdx", modrm = false, imm = 0, is64 = true }
+op1[0x53] = { name = "push rbx", modrm = false, imm = 0, is64 = true }
+op1[0x54] = { name = "push rsp", modrm = false, imm = 0, is64 = true }
+op1[0x55] = { name = "push rbp", modrm = false, imm = 0, is64 = true }
+op1[0x56] = { name = "push rsi", modrm = false, imm = 0, is64 = true }
+op1[0x57] = { name = "push rdi", modrm = false, imm = 0, is64 = true }
 op1[0x58] = { name = "pop rax", modrm = false, imm = 0 }
 op1[0x59] = { name = "pop rcx", modrm = false, imm = 0 }
 op1[0x5A] = { name = "pop rdx", modrm = false, imm = 0 }
@@ -94,9 +94,9 @@ op1[0x7C] = { name = "jl rel8", modrm = false, imm = 1 }
 op1[0x7D] = { name = "jge rel8", modrm = false, imm = 1 }
 op1[0x7E] = { name = "jle rel8", modrm = false, imm = 1 }
 op1[0x7F] = { name = "jg rel8", modrm = false, imm = 1 }
-op1[0x80] = { name = "alu r/m8 imm8", modrm = true, imm = 1, group = { "add", "or", "adc", "sbb", "and", "sub", "xor", "cmp" } }
-op1[0x81] = { name = "alu r/m imm32", modrm = true, imm = 4, group = { "add", "or", "adc", "sbb", "and", "sub", "xor", "cmp" } }
-op1[0x83] = { name = "alu r/m imm8", modrm = true, imm = 1, group = { "add", "or", "adc", "sbb", "and", "sub", "xor", "cmp" } }
+op1[0x80] = { name = "alu r/m8 imm8", modrm = true, imm = 1, grp = { "add", "or", "adc", "sbb", "and", "sub", "xor", "cmp" } }
+op1[0x81] = { name = "alu r/m imm32", modrm = true, imm = 4, grp = { "add", "or", "adc", "sbb", "and", "sub", "xor", "cmp" } }
+op1[0x83] = { name = "alu r/m imm8", modrm = true, imm = 1, grp = { "add", "or", "adc", "sbb", "and", "sub", "xor", "cmp" } }
 op1[0x84] = { name = "test r/m r8", modrm = true, imm = 0 }
 op1[0x85] = { name = "test r/m r", modrm = true, imm = 0 }
 op1[0x86] = { name = "xchg r/m r8", modrm = true, imm = 0 }
@@ -126,24 +126,24 @@ op1[0xBC] = { name = "mov rsp imm", modrm = false, imm = 4 }
 op1[0xBD] = { name = "mov rbp imm", modrm = false, imm = 4 }
 op1[0xBE] = { name = "mov rsi imm", modrm = false, imm = 4 }
 op1[0xBF] = { name = "mov rdi imm", modrm = false, imm = 4 }
-op1[0xC0] = { name = "shift r/m8 imm8", modrm = true, imm = 1, group = { "rol", "ror", "rcl", "rcr", "shl", "shr", nil, "sar" } }
-op1[0xC1] = { name = "shift r/m imm8", modrm = true, imm = 1, group = { "rol", "ror", "rcl", "rcr", "shl", "shr", nil, "sar" } }
+op1[0xC0] = { name = "shift r/m8 imm8", modrm = true, imm = 1, grp = { "rol", "ror", "rcl", "rcr", "shl", "shr", nil, "sar" } }
+op1[0xC1] = { name = "shift r/m imm8", modrm = true, imm = 1, grp = { "rol", "ror", "rcl", "rcr", "shl", "shr", nil, "sar" } }
 op1[0xC3] = { name = "ret", modrm = false, imm = 0 }
 op1[0xC6] = { name = "mov r/m8 imm8", modrm = true, imm = 1 }
 op1[0xC7] = { name = "mov r/m imm32", modrm = true, imm = 4 }
 op1[0xC9] = { name = "leave", modrm = false, imm = 0 }
-op1[0xD0] = { name = "shift r/m8 1", modrm = true, imm = 0, group = { "rol", "ror", "rcl", "rcr", "shl", "shr", nil, "sar" } }
-op1[0xD1] = { name = "shift r/m 1", modrm = true, imm = 0, group = { "rol", "ror", "rcl", "rcr", "shl", "shr", nil, "sar" } }
-op1[0xD2] = { name = "shift r/m8 cl", modrm = true, imm = 0, group = { "rol", "ror", "rcl", "rcr", "shl", "shr", nil, "sar" } }
-op1[0xD3] = { name = "shift r/m cl", modrm = true, imm = 0, group = { "rol", "ror", "rcl", "rcr", "shl", "shr", nil, "sar" } }
+op1[0xD0] = { name = "shift r/m8 1", modrm = true, imm = 0, grp = { "rol", "ror", "rcl", "rcr", "shl", "shr", nil, "sar" } }
+op1[0xD1] = { name = "shift r/m 1", modrm = true, imm = 0, grp = { "rol", "ror", "rcl", "rcr", "shl", "shr", nil, "sar" } }
+op1[0xD2] = { name = "shift r/m8 cl", modrm = true, imm = 0, grp = { "rol", "ror", "rcl", "rcr", "shl", "shr", nil, "sar" } }
+op1[0xD3] = { name = "shift r/m cl", modrm = true, imm = 0, grp = { "rol", "ror", "rcl", "rcr", "shl", "shr", nil, "sar" } }
 op1[0xE8] = { name = "call rel32", modrm = false, imm = 4 }
 op1[0xE9] = { name = "jmp rel32", modrm = false, imm = 4 }
 op1[0xEB] = { name = "jmp rel8", modrm = false, imm = 1 }
 op1[0xF4] = { name = "hlt", modrm = false, imm = 0 }
-op1[0xF6] = { name = "alu r/m8", modrm = true, imm = 0, group = { "test", nil, "not", "neg", "mul", "imul", "div", "idiv" } }
-op1[0xF7] = { name = "alu r/m", modrm = true, imm = 0, group = { "test", nil, "not", "neg", "mul", "imul", "div", "idiv" } }
-op1[0xFE] = { name = "inc/dec r/m8", modrm = true, imm = 0, group = { "inc", "dec" } }
-op1[0xFF] = { name = "inc/dec/call/jmp/push r/m", modrm = true, imm = 0, group = { "inc", "dec", "call", nil, "jmp", nil, "push" } }
+op1[0xF6] = { name = "alu r/m8", modrm = true, imm = 0, grp = { "test", nil, "not", "neg", "mul", "imul", "div", "idiv" } }
+op1[0xF7] = { name = "alu r/m", modrm = true, imm = 0, grp = { "test", nil, "not", "neg", "mul", "imul", "div", "idiv" } }
+op1[0xFE] = { name = "inc/dec r/m8", modrm = true, imm = 0, grp = { "inc", "dec" } }
+op1[0xFF] = { name = "inc/dec/call/jmp/push r/m", modrm = true, imm = 0, grp = { "inc", "dec", "call", nil, "jmp", nil, "push" }, is64 = true }
 
 -- two byte opcodes (0F prefix)
 op2[0x05] = { name = "syscall", modrm = false, imm = 0 }
