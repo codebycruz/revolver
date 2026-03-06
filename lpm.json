@@ -1,0 +1,8 @@
+{
+	"name": "rv",
+	"version": "0.1.0",
+	"dependencies": {
+		"clap": { "git": "https://github.com/codebycruz/lpm" },
+		"ansi": { "git": "https://github.com/codebycruz/lpm" }
+	}
+}
